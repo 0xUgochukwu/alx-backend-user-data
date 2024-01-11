@@ -37,13 +37,12 @@ def get_db() -> MySQLConnection:
     username = environ.get("PERSONAL_DATA_DB_USERNAME", "root")
     password = environ.get("PERSONAL_DATA_DB_PASSWORD", "")
     host = environ.get("PERSONAL_DATA_DB_HOST", "localhost")
-    db = environ.get("PERSONAL_DATA_DB_NAME")
+    db_name = environ.get("PERSONAL_DATA_DB_NAME")
 
-    cnx = MySQLConnection(user=username,
+    return MySQLConnection(user=username,
                            password=password,
-                           host=host, database=db)
+                           host=host, database=db_name)
 
-    return cnx
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class

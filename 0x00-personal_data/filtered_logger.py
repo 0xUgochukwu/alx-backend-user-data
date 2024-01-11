@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-''' Personal Data
+''' Personal Data Module
 '''
 import re
 from typing import List

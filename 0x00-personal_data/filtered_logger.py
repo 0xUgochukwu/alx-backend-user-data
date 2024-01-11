@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 ''' Personal Data Module
 '''
-import re
 from typing import List
+import re
 
 
 def filter_datum(fields: List[str], redaction: str,
-                 message: str, seprator: str) -> str:
+                 message: str, separator: str) -> str:
     ''' Returns messages obsuscated. '''
     for field in fields:
-        message = re.sub(f'{field}=*?{seprator}',
-                         f'{field}={redaction}{seprator}', message)
+        message = re.sub(f'{field}=*?{separator}',
+                         f'{field}={redaction}{separator}', message)
     return message

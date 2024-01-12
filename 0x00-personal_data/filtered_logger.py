@@ -6,7 +6,6 @@ import re
 import logging
 from os import getenv
 import mysql.connector
-from bcrypt import hashpw, gensalt
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -43,10 +42,6 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                    password=password,
                                    host=host, database=db_name)
 
-
-def hash_password(password: str) -> str:
-    ''' Returns a hashed password '''
-    return hashpw(password.encode('utf-8'), gensalt())
 
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class

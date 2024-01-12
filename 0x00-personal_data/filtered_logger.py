@@ -6,7 +6,7 @@ import re
 import logging
 from os import getenv
 import mysql.connector
-
+from bcrypt import hashpw, gensalt
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -44,6 +44,10 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                    host=host, database=db_name)
 
 
+def hash_password(password: str) -> str:
+    ''' Returns a hashed password '''
+    return hashpw(password.encode('utf-8'), gensalt())
+
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class
     """
@@ -61,22 +65,3 @@ class RedactingFormatter(logging.Formatter):
         record.msg = filter_datum(self.__fields, self.REDACTION,
                                   record.getMessage(), self.SEPARATOR)
         return super(RedactingFormatter, self).format(record)
-
-
-def main():
-    ''' Main Function '''
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute("SELECT * FROM users;")
-    logger = get_logger()
-    for row in cursor:
-        message = "name={}; email={}; phone={}; ssn={}; password={};\
-        ip={}; last_login={}; user_agent={}; ".format(
-            row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7])
-        logger.info(message)
-    cursor.close()
-    db.close()
-
-
-if __name__ == "__main__":
-    main()

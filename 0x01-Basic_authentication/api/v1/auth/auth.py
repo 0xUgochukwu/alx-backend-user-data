@@ -14,9 +14,9 @@ class Auth:
         """
         if path and excluded_paths:
             for ex_path in excluded_paths:
-                if ex_path.endswith("*") and path != ex_path[:len(path)]:
+                if path != ex_path[:len(path)]:
                     return False
-                elif ex_path.startswith(path): 
+                elif ex_path.startswith(path):
                     return False
         return True
 

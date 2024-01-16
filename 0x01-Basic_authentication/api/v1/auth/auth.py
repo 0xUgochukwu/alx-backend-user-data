@@ -13,8 +13,8 @@ class Auth:
         """ Checks if a path requires Authentication
         """
         if path and excluded_paths:
-            for excluded_path in excluded_paths:
-                if excluded_path.startswith(path):
+            for ex_path in excluded_paths:
+                if ex_path.startswith(path) or path == ex_path[:len(path)]:
                     return False
         return True
 

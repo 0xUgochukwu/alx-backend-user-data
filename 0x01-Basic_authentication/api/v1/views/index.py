@@ -33,3 +33,12 @@ def unathorized() -> str:
         - call the unauthorized handler
     """
     abort(401)
+
+
+@app_views.route('/forbidden/', methods=['GET'], strict_slashes=False)
+def unathorized() -> str:
+    """ GET /api/v1/forbidden
+    Return:
+        - call the forbidden handler
+    """
+    abort(403)

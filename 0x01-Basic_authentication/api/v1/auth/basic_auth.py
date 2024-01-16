@@ -9,4 +9,14 @@ from typing import List, TypeVar
 class BasicAuth(Auth):
     """ Basic Authentication Class
     """
-    pass
+
+
+    def extract_base64_authorization_header(self, authorization_header: str) -> str:
+        """ Extracts Base64 Authorization Header
+        """
+
+        auth = authorization_header
+        if auth and type(auth) is str and auth.startswith("Basic "):
+            return auth.split(" ")[1]
+
+        return None

@@ -2,6 +2,7 @@
 """ Basic User Authentication Module
 """
 from api.v1.auth.auth import Auth
+from base64 import b64decode
 from flask import request
 from typing import List, TypeVar
 
@@ -28,8 +29,8 @@ class BasicAuth(Auth):
         b64auth = base64_authorization_header
         if b64auth and type(b64auth) is str:
             try:
-                return b64auth.decode('utf-8')
+                decoded = b64decode(b64auth.encode('utf-8'))
+                return decoded.decode('utf-8')
             except Exception:
                 return None
 
-        return None

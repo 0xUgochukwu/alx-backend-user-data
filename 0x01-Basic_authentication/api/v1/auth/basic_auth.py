@@ -21,8 +21,8 @@ class BasicAuth(Auth):
 
         return None
 
-    def decode_base64_authorization_header(self,
-                                           base64_authorization_header: str) -> str:
+    def decode_base64_authorization_header(
+            self, base64_authorization_header: str) -> str:
         """ Decode Base64 Authorization Header
         """
         b64auth = base64_authorization_header
@@ -33,4 +33,3 @@ class BasicAuth(Auth):
                 return None
 
         return None
-

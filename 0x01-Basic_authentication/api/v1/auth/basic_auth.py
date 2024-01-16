@@ -2,6 +2,7 @@
 """ Basic User Authentication Module
 """
 from api.v1.auth.auth import Auth
+from models.user import User
 from base64 import b64decode
 from flask import request
 from typing import List, TypeVar
@@ -42,3 +43,23 @@ class BasicAuth(Auth):
         if auth and type(auth) is str and ':' in auth:
             return auth.split(":", 1)
         return (None, None)
+
+    def user_object_from_credentials(
+            self, user_email: str, user_pwd: str) -> TypeVar('User'):
+        """ Get User object from Credentials
+        """
+        if not user_email and not type(user_email) is str:
+            return None
+        if not user_pwd and not type(user_pwd) is str:
+            return None
+
+        try:
+            found_users = User.search({"email": user_email})
+        except Exception:
+            return None
+
+        for user in found_users:
+            if user.is_valid_password(user_pwd):
+                return user
+
+        return None

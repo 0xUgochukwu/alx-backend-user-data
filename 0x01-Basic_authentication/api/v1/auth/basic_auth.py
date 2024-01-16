@@ -33,4 +33,3 @@ class BasicAuth(Auth):
                 return decoded.decode('utf-8')
             except Exception:
                 return None
-

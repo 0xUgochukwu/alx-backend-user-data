@@ -30,7 +30,7 @@ class Auth:
         """ Current User
         """
         return None
-    
+
     def session_cookie(self, request=None):
         """ Returns a cookie value from a request
         """

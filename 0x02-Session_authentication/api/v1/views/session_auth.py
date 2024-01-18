@@ -4,7 +4,6 @@
 from flask import jsonify, request
 from api.v1.views import app_views
 from models.user import User
-from api.v1.auth.session_auth import SessionAuth
 from os import getenv
 
 
@@ -29,7 +28,7 @@ def login() -> str:
 
     user = users[0]
     if user.is_valid_password(password):
-        auth = SessionAuth()
+        from api.v1.app import auth
         session_id = auth.create_session(user.id)
         response = jsonify(user.to_json())
         response.set_cookie(getenv('SESSION_NAME'), session_id)

@@ -35,12 +35,10 @@ class SessionDBAuth(SessionAuth):
         if request:
             session_id = self.session_cookie(request)
             if session_id:
+                UserSession.load_from_file()
                 session = UserSession.search({'session_id': session_id})
                 if session:
-                    try:
-                        session[0].remove()
-                        UserSession.save_to_file()
-                        return True
-                    except Exception:
-                        return False
+                    session[0].remove()
+                    UserSession.save_to_file()
+                    return True
         return False

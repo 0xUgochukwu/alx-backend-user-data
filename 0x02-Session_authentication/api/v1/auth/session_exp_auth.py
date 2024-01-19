@@ -19,7 +19,7 @@ class SessionExpAuth(SessionAuth):
         """
         session_id = super().create_session(user_id)
         if session_id:
-            SessionAuth.user_id_by_session_id[session_id] = {
+            self.user_id_by_session_id[session_id] = {
                 'user_id': user_id,
                 'created_at': datetime.now()
             }
@@ -30,8 +30,10 @@ class SessionExpAuth(SessionAuth):
         """ Returns user id based on a session id
         """
         if session_id and type(session_id) is str:
-            session_dict = SessionAuth.user_id_by_session_id.get(session_id)
+            session_dict = self.user_id_by_session_id.get(session_id)
             if session_dict:
+                if self.session_duration <= 0:
+                    return session_dict.get('user_id')
                 if 'created_at' in session_dict:
                     if (session_dict['created_at'] +
                             timedelta(seconds=self.session_duration) <

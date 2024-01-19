@@ -31,12 +31,12 @@ class SessionExpAuth(SessionAuth):
         """
         if session_id and session_id in self.user_id_by_session_id:
             session_dict = self.user_id_by_session_id.get(session_id)
-        if session_dict:
-            if 'created_at' in session_dict:
-                if self.session_duration > 0:
-                    if (session_dict['created_at'] +
-                            timedelta(seconds=self.session_duration) <
-                            datetime.now()):
-                        return None
-                return session_dict.get('user_id')
-        return None
+            if session_dict:
+                if 'created_at' in session_dict:
+                    if self.session_duration > 0:
+                        if (session_dict['created_at'] +
+                                timedelta(seconds=self.session_duration) <
+                                datetime.now()):
+                            return None
+                    return session_dict.get('user_id')
+            return None

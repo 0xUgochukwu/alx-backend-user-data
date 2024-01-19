@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Session Authentication Module
+""" Session Authentication Module (Database)
 """
 from api.v1.auth.session_auth import SessionAuth
 from datetime import datetime, timedelta

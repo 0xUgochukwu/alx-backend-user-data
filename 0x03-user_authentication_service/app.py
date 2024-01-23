@@ -103,6 +103,22 @@ def get_reset_password_token() -> str:
         abort(403)
 
 
+@app.route("/reset_password", methods=["PUT"])
+def update_password() -> str:
+    """ PUT /reset_password
+        Return:
+          - JSON payload
+    """
+    try:
+        email = request.form["email"]
+        reset_token = request.form["reset_token"]
+        new_password = request.form["new_password"]
+        AUTH.update_password(reset_token, new_password)
+        return jsonify({"email": email, "message": "Password updated"}), 200
+    except Exception:
+        abort(403)
+
+
 if __name__ == "__main__":
     port = getenv("API_PORT") or 5000
     host = getenv("API_HOST") or "0.0.0.0"

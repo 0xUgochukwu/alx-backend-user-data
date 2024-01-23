@@ -2,6 +2,7 @@
 """ Auth Methods
 """
 from bcrypt import hashpw, gensalt
+from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
 
@@ -22,11 +23,9 @@ class Auth:
     def register_user(self, email: str, password: str) -> User:
         """ Registers a User and returns the user object
         """
-        user = self._db.find_user_by(email=email)
-
-        if user:
+        try:
+            self._db.find_user_by(email=email)
             raise ValueError(f"User {email} already exists")
-
-        user = self._db.add_user(email, str(_hash_password(password)))
-
-        return user
+        except NoResultFound:
+            new_user = self._db.add_user(email, str(_hash_password(password)))
+            return new_user

@@ -12,15 +12,12 @@ def _hash_password(password: str) -> bytes:
     return hashpw(password.encode('utf-8'), gensalt())
 
 
-
-
 class Auth:
     """Auth class to interact with the authentication database.
     """
 
     def __init__(self):
         self._db = DB()
-
 
     def register_user(self, email: str, password: str) -> User:
         """ Registers a User and returns the user object

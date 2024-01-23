@@ -75,6 +75,20 @@ def log_out() -> str:
         abort(403)
 
 
+@app.route("/profile", methods=["GET"])
+def profile() -> str:
+    """ GET /profile
+        Return:
+          - JSON payload
+    """
+    try:
+        session_id = request.cookies.get("session_id")
+        user = AUTH.get_user_from_session_id(session_id)
+        return jsonify({"email": user.email}), 200
+    except Exception:
+        abort(403)
+
+
 if __name__ == "__main__":
     port = getenv("API_PORT") or 5000
     host = getenv("API_HOST") or "0.0.0.0"

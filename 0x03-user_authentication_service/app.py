@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """ Flask App
 """
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect
 from os import getenv
 from auth import Auth
 
@@ -58,6 +58,21 @@ def log_in() -> str:
         return response
     else:
         abort(401)
+
+
+@app.route("/sessions", methods=["DELETE"])
+def log_out() -> str:
+    """ DELETE /sessions
+        Return:
+          - JSON payload
+    """
+    try:
+        session_id = request.cookies.get("session_id")
+        user = AUTH.get_user_from_session_id(session_id)
+        AUTH.destroy_session(user.id)
+        return redirect("/")
+    except Exception:
+        abort(403)
 
 
 if __name__ == "__main__":

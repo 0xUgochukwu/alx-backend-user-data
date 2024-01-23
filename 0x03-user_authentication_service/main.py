@@ -62,7 +62,7 @@ def log_out(session_id: str) -> None:
 
 
 def reset_password_token(email: str) -> str:
-    """Retrieve a password reset token."""
+    """Retrieve password reset token."""
     url = f"{BASE_URL}/reset_password"
     data = {"email": email}
     response = requests.post(url, json=data)
